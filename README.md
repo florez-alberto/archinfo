@@ -22,7 +22,7 @@ To use the script, simply run it in the terminal:
 ```
 This will display the system information in the terminal.
 
-In my computer, I moved the script to /usr/bin and gave it chmod +x permissions, then added it to ~/.bashrc so it opens every time I open a new window.
+In my computer, I moved the script to /usr/bin and gave it chmod +x permissions, then added it to ~/.bashrc so it opens every time I open a new terminal.
 
 
 
