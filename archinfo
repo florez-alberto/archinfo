@@ -1,0 +1,38 @@
+#!/bin/sh
+
+Desktop="${XDG_CURRENT_DESKTOP}"
+Kernel="$(uname -sr)"
+Uptime="$(uptime -p | sed 's/up //')"
+Shell="$(basename "$SHELL")"
+CPU="$(lscpu | grep Model\ name | sed 's/name:\ //' | sed "s/([^)]*)/()/g" | sed 's/[)(]//g')" 
+RAM="$(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
+
+totaldisk="$(df -H / 2>/dev/null | tail -1)"
+disktotal="$(awk '{print $2}' <<< "${totaldisk}")"
+diskused="$(awk '{print $3}' <<< "${totaldisk}")"
+diskusedper="$(awk '{print $5}' <<< "${totaldisk}")"
+diskusage="${diskused} / ${disktotal} (${diskusedper})"
+
+c1='\033[0m\033[1;36m'
+c2='\033[0m\033[36m'
+c0=$'\033[0m'
+bold=$'\033[1m' 
+echo -e "${c1}                   -\`                 "
+echo -e "${c1}                  .o+\`                "            ${bold}OS: ${c0}Arch Linux
+echo -e "${c1}                 \`ooo/                "           ${bold}Kernel: ${c0}$Kernel
+echo -e "${c1}                \`+oooo:               "           ${bold}Desktop: ${c0}$Desktop
+echo -e "${c1}               \`+oooooo:              "            ${bold}CPU: ${c0}$CPU
+echo -e "${c1}               -+oooooo+:             "            ${bold}Shell: ${c0}$Shell   
+echo -e "${c1}             \`/:-:++oooo+:            "            ${bold}RAM: ${c0}$RAM   
+echo -e "${c1}            \`/++++/+++++++:           "            ${bold}Uptime: ${c0}$Uptime
+echo -e "${c1}           \`/++++++++++++++:          "            ${bold}Disk: ${c0}$diskusage
+echo -e "${c1}          \`/+++o${c2}oooooooo${c1}oooo/\`        "
+echo -e "${c2}         ${c1}./${c2}ooosssso++osssssso${c1}+\`       "
+echo -e "${c2}        .oossssso-\`\`\`\`/ossssss+\`      "
+echo -e "${c2}       -osssssso.      :ssssssso.     "
+echo -e "${c2}      :osssssss/        osssso+++.    "
+echo -e "${c2}     /ossssssss/        +ssssooo/-    "
+echo -e "${c2}   \`/ossssso+/:-        -:/+osssso+-  "
+echo -e "${c2}  \`+sso+:-\`                 \`.-/+oso: "
+echo -e "${c2} \`++:.                           \`-/+/"
+echo -e "${c2} .\`                                 \`/${c0}"
